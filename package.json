@@ -4,11 +4,26 @@
   "description": "get your page paginations details",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
+  "homepage": "https://github.com/alirezakargar1380/pagination-helper.git",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alirezakargar1380/pagination-helper.git"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
   "keywords": [
     "pagination",
-    "calculator"
+    "calculator",
+    "paginator",
+    "offset",
+    "limit",
+    "skip",
+    "take"
   ],
   "author": "alireza kargar (alirezakargarsuport@gmail.com)",
   "license": "ISC"
