@@ -1,0 +1,15 @@
+{
+  "name": "pagination-helper",
+  "version": "1.0.0",
+  "description": "get your page paginations details",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pagination",
+    "calculator"
+  ],
+  "author": "alireza kargar (alirezakargarsuport@gmail.com)",
+  "license": "ISC"
+}
