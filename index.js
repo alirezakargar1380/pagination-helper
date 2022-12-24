@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class pagination {
     constructor(params) {
         this.data_per_page = params.data_per_page || 0;
+        this.exportDataAsarray = params.exportDataAsarray || false;
     }
     /**
     *   data_per_page: number of data that you want to show per page
@@ -24,7 +25,13 @@ class pagination {
         /**
          *  this is the number of your page that you have
          */
-        return count;
+        if (!this.exportDataAsarray)
+            return count;
+        const array = [];
+        for (let i = 1; i <= count; i++) {
+            array.push(i);
+        }
+        return array;
     }
     getTakeAndSkip(pageNumber) {
         return {

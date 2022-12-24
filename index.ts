@@ -4,18 +4,22 @@ interface ITakeAndSkip {
 }
 
 interface IPagination {
-    data_per_page: number
+    data_per_page: number,
+    exportDataAsarray?: boolean
 }
 
 interface p {
     getTakeAndSkip(pageNumber: number): ITakeAndSkip
+    getNumberOfPages(data_number: number): number | Array<number>
     getPageNumberByOffsetAndLimit(offset: number, limit: number): number
 }
 
 export default class pagination implements p {
     private data_per_page: number
+    private exportDataAsarray?: boolean
     constructor(params: IPagination) {
         this.data_per_page = params.data_per_page || 0
+        this.exportDataAsarray = params.exportDataAsarray || false
     }
 
     /**
@@ -38,7 +42,14 @@ export default class pagination implements p {
         /**
          *  this is the number of your page that you have
          */
-        return count
+        if (!this.exportDataAsarray) return count
+
+        const array: Array<number> = []
+        for (let i = 1; i <= count; i++) {
+            array.push(i)
+        }
+
+        return array
     }
 
     getTakeAndSkip(pageNumber: number) {
