@@ -27,17 +27,7 @@ export default class pagination implements p {
     *   data_number: number of all of your data
     */
     getNumberOfPages(data_number: number) {
-        let count: number = data_number
-        if (count < this.data_per_page) {
-            count = 1
-        } else {
-            count = count / this.data_per_page
-            const integer = Number.isInteger(count)
-            if (!integer) {
-                count = Number(count.toFixed(0))
-                count++
-            }
-        }
+        let count: number = Math.ceil(data_number/this.data_per_page)
 
         /**
          *  this is the number of your page that you have
