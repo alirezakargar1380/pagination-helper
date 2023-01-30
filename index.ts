@@ -1,23 +1,23 @@
-interface ITakeAndSkip {
+export interface ITakeAndSkip {
     skip: number
     take: number
 }
 
-interface IPagination {
+export interface IPaginationParams {
     data_per_page: number,
     exportDataAsarray?: boolean
 }
 
-interface p {
+export interface IPaginationHelper {
     getTakeAndSkip(pageNumber: number): ITakeAndSkip
     getNumberOfPages(data_number: number): number | Array<number>
     getPageNumberByOffsetAndLimit(offset: number, limit: number): number
 }
 
-export default class pagination implements p {
+export default class pagination implements IPaginationHelper {
     private data_per_page: number
     private exportDataAsarray?: boolean
-    constructor(params: IPagination) {
+    constructor(params: IPaginationParams) {
         this.data_per_page = params.data_per_page || 0
         this.exportDataAsarray = params.exportDataAsarray || false
     }

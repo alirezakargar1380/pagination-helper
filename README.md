@@ -27,7 +27,7 @@ var paginationHelper = require('pagination-helper');
 import paginationHelper from "pagination-helper";
 
 let pagination = new paginationHelper({
-    data_per_page: 10
+    data_per_page: 10 // number of data that you want to show them per page
 })
 
 console.log(pagination.getNumberOfPages(209)) // => 21, it means that you have 21 pages
@@ -41,8 +41,8 @@ if you want to map number of your page's in your react component you can go on l
 import paginationHelper from "pagination-helper";
 
 let pagination = new paginationHelper({
-    data_per_page: 10,
-    exportDataAsarray: true
+    data_per_page: 10, // number of data that you want to show them per page
+    exportDataAsarray: true // export number of pages as array
 })
 
 console.log(pagination.getNumberOfPages(20.9)) // => [ 1, 2, 3 ]
