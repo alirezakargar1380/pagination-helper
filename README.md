@@ -64,9 +64,8 @@ pagination_helper.getNumberOfPages(20.9) // => [1, 2, 3]
 ```javascript
 // Determines the current page number based on offset and limit values
 // @param offset Number of items to skip
-// @param limit Number of items per page
 // @returns The current page number
-pagination_helper.getPageNumberByOffsetAndLimit(30, 5)
+pagination_helper.getPageNumberByOffsetAndLimit(30)
 ```
 
 #### Get Offset(Limit) And Limit(Take) by Page Number

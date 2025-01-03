@@ -22,10 +22,9 @@ interface PaginationHelperReturn {
     /**
      * Determines the current page number based on offset and limit values
      * @param offset Number of items to skip
-     * @param limit Number of items per page
      * @returns The current page number
      */
-    getPageNumberByOffsetAndLimit: (offset: number, limit: number) => number;
+    getPageNumberByOffsetAndLimit: (offset: number) => number;
 }
 /**
  * Creates a pagination helper with the specified configuration

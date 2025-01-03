@@ -1,6 +1,6 @@
 {
   "name": "pagination-helper",
-  "version": "3.1.9",
+  "version": "3.1.11",
   "description": "get your page paginations details",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

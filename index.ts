@@ -26,10 +26,9 @@ interface PaginationHelperReturn {
     /**
      * Determines the current page number based on offset and limit values
      * @param offset Number of items to skip
-     * @param limit Number of items per page
      * @returns The current page number
      */
-    getPageNumberByOffsetAndLimit: (offset: number, limit: number) => number;
+    getPageNumberByOffsetAndLimit: (offset: number) => number;
 }
 
 /**
@@ -40,11 +39,6 @@ export const pagination = (params: IPaginationParams): PaginationHelperReturn =>
     const data_per_page = params.data_per_page || 0
     const exportAsArray = params.exportDataAsarray || false
 
-    /**
-     * Calculates the total number of pages based on data count
-     * @param data_count Total number of items to paginate
-     * @returns Number of pages or array of page numbers if exportDataAsarray is true
-     */
     const getNumberOfPages = (data_count: number): number | number[] => {
         const count = Math.ceil(data_count / data_per_page)
 
@@ -58,27 +52,16 @@ export const pagination = (params: IPaginationParams): PaginationHelperReturn =>
         return array
     }
 
-    /**
-    * Calculates the take (limit) and skip (offset) values for pagination
-    * @param pageNumber The current page number to calculate pagination values for
-    * @returns An object containing take and skip values
-    */
     const getTakeAndSkip = (pageNumber: number): ITakeAndSkip => ({
         take: data_per_page,
         skip: (data_per_page * pageNumber) - data_per_page
     })
 
-    /**
-     * Determines the current page number based on offset and limit values
-     * @param offset Number of items to skip
-     * @param limit Number of items per page
-     * @returns The current page number
-     */
-    const getPageNumberByOffsetAndLimit = (offset: number, limit: number): number => {
-        if (limit > offset) {
+    const getPageNumberByOffsetAndLimit = (offset: number): number => {
+        if (data_per_page > offset) {
             return 1
         }
-        return Math.ceil((offset + limit) / limit)
+        return Math.ceil((offset + data_per_page) / data_per_page)
     }
 
     return {
