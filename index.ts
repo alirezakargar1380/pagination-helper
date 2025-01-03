@@ -78,7 +78,7 @@ export const pagination = (params: IPaginationParams): PaginationHelperReturn =>
         if (limit > offset) {
             return 1
         }
-        return (offset + limit) / limit
+        return Math.ceil((offset + limit) / limit)
     }
 
     return {
