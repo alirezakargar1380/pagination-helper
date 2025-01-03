@@ -4,35 +4,51 @@ export interface ITakeAndSkip {
 }
 
 export interface IPaginationParams {
-    data_per_page: number,
+    data_per_page: number
     exportDataAsarray?: boolean
 }
 
-export interface IPaginationHelper {
-    getTakeAndSkip(pageNumber: number): ITakeAndSkip
-    getNumberOfPages(data_number: number): number | Array<number>
-    getPageNumberByOffsetAndLimit(offset: number, limit: number): number
-}
-
-export default class pagination implements IPaginationHelper {
-    private data_per_page: number
-    private exportDataAsarray?: boolean
-    constructor(params: IPaginationParams) {
-        this.data_per_page = params.data_per_page || 0
-        this.exportDataAsarray = params.exportDataAsarray || false
-    }
+interface PaginationHelperReturn {
+    /**
+     * Calculates the total number of pages based on data count
+     * @param data_count Total number of items to paginate
+     * @returns Number of pages or array of page numbers if exportDataAsarray is true
+     */
+    getNumberOfPages: (data_count: number) => number | number[];
 
     /**
-    *   data_per_page: number of data that you want to show per page
-    *   data_number: number of all of your data
-    */
-    getNumberOfPages(data_number: number) {
-        let count: number = Math.ceil(data_number/this.data_per_page)
+     * Calculates the take (limit) and skip (offset) values for pagination
+     * @param pageNumber The current page number to calculate pagination values for
+     * @returns An object containing take and skip values
+     */
+    getTakeAndSkip: (pageNumber: number) => ITakeAndSkip;
 
-        /**
-         *  this is the number of your page that you have
-         */
-        if (!this.exportDataAsarray) return count
+    /**
+     * Determines the current page number based on offset and limit values
+     * @param offset Number of items to skip
+     * @param limit Number of items per page
+     * @returns The current page number
+     */
+    getPageNumberByOffsetAndLimit: (offset: number, limit: number) => number;
+}
+
+/**
+ * Creates a pagination helper with the specified configuration
+ * @param params Configuration parameters for pagination
+ */
+export const pagination = (params: IPaginationParams): PaginationHelperReturn => {
+    const data_per_page = params.data_per_page || 0
+    const exportAsArray = params.exportDataAsarray || false
+
+    /**
+     * Calculates the total number of pages based on data count
+     * @param data_count Total number of items to paginate
+     * @returns Number of pages or array of page numbers if exportDataAsarray is true
+     */
+    const getNumberOfPages = (data_count: number): number | number[] => {
+        const count = Math.ceil(data_count / data_per_page)
+
+        if (!exportAsArray) return count
 
         const array: Array<number> = []
         for (let i = 1; i <= count; i++) {
@@ -42,15 +58,34 @@ export default class pagination implements IPaginationHelper {
         return array
     }
 
-    getTakeAndSkip(pageNumber: number) {
-        return {
-            take: this.data_per_page,
-            skip: (this.data_per_page * pageNumber) - this.data_per_page
+    /**
+    * Calculates the take (limit) and skip (offset) values for pagination
+    * @param pageNumber The current page number to calculate pagination values for
+    * @returns An object containing take and skip values
+    */
+    const getTakeAndSkip = (pageNumber: number): ITakeAndSkip => ({
+        take: data_per_page,
+        skip: (data_per_page * pageNumber) - data_per_page
+    })
+
+    /**
+     * Determines the current page number based on offset and limit values
+     * @param offset Number of items to skip
+     * @param limit Number of items per page
+     * @returns The current page number
+     */
+    const getPageNumberByOffsetAndLimit = (offset: number, limit: number): number => {
+        if (limit > offset) {
+            return 1
         }
+        return (offset + limit) / limit
     }
 
-    getPageNumberByOffsetAndLimit(offset: number, limit: number) {
-        if (limit > offset) return 1
-        return (offset+limit)/limit
+    return {
+        getNumberOfPages,
+        getTakeAndSkip,
+        getPageNumberByOffsetAndLimit
     }
 }
+
+export default pagination

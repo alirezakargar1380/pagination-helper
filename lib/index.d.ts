@@ -6,23 +6,30 @@ export interface IPaginationParams {
     data_per_page: number;
     exportDataAsarray?: boolean;
 }
-export interface IPaginationHelper {
-    getTakeAndSkip(pageNumber: number): ITakeAndSkip;
-    getNumberOfPages(data_number: number): number | Array<number>;
-    getPageNumberByOffsetAndLimit(offset: number, limit: number): number;
-}
-export default class pagination implements IPaginationHelper {
-    private data_per_page;
-    private exportDataAsarray?;
-    constructor(params: IPaginationParams);
+interface PaginationHelperReturn {
     /**
-    *   data_per_page: number of data that you want to show per page
-    *   data_number: number of all of your data
-    */
-    getNumberOfPages(data_number: number): number | number[];
-    getTakeAndSkip(pageNumber: number): {
-        take: number;
-        skip: number;
-    };
-    getPageNumberByOffsetAndLimit(offset: number, limit: number): number;
+     * Calculates the total number of pages based on data count
+     * @param data_count Total number of items to paginate
+     * @returns Number of pages or array of page numbers if exportDataAsarray is true
+     */
+    getNumberOfPages: (data_count: number) => number | number[];
+    /**
+     * Calculates the take (limit) and skip (offset) values for pagination
+     * @param pageNumber The current page number to calculate pagination values for
+     * @returns An object containing take and skip values
+     */
+    getTakeAndSkip: (pageNumber: number) => ITakeAndSkip;
+    /**
+     * Determines the current page number based on offset and limit values
+     * @param offset Number of items to skip
+     * @param limit Number of items per page
+     * @returns The current page number
+     */
+    getPageNumberByOffsetAndLimit: (offset: number, limit: number) => number;
 }
+/**
+ * Creates a pagination helper with the specified configuration
+ * @param params Configuration parameters for pagination
+ */
+export declare const pagination: (params: IPaginationParams) => PaginationHelperReturn;
+export default pagination;

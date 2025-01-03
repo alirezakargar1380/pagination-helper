@@ -1,12 +1,12 @@
 {
   "name": "pagination-helper",
-  "version": "1.2.6",
+  "version": "3.0.4",
   "description": "get your page paginations details",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc index.ts"
+    "build": "tsc"
   },
   "homepage": "https://github.com/alirezakargar1380/pagination-helper.git",
   "repository": {
