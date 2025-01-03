@@ -18,45 +18,64 @@ Install the library with `npm install pagination-helper`
 #### No ES6
 
 ```javascript
-var paginationHelper = require('pagination-helper');
+var pagination = require('pagination-helper');
 ```
 
 #### ES6
 
 ```javascript
-import paginationHelper from "pagination-helper";
+import pagination, { IPaginationParams } from "pagination-helper";
 
-let pagination = new paginationHelper({
-    data_per_page: 10 // number of data that you want to show them per page
-})
+const params: IPaginationParams = {
+    data_per_page: 10,
+    exportDataAsarray: true,
+};
 
-console.log(pagination.getNumberOfPages(209)) // => 21, it means that you have 21 pages
-console.log(pagination.getNumberOfPages(20.9)) // => 3, it means that you have 3 pages, it support the float numbers.
+const pagination_helper = pagination(params);
+
+
+// Calculates the total number of pages based on data count
+// @param data_count Total number of items to paginate
+// @returns Number of pages or array of page numbers if exportDataAsarray is true
+pagination_helper.getNumberOfPage(569) // output: 57 pages
 ```
 
 #### React
 if you want to map number of your page's in your react component you can go on like this:
 
 ```javascript
-import paginationHelper from "pagination-helper";
+import pagination, { IPaginationParams } from "pagination-helper";
 
-let pagination = new paginationHelper({
-    data_per_page: 10, // number of data that you want to show them per page
-    exportDataAsarray: true // export number of pages as array
-})
+const params: IPaginationParams = {
+    data_per_page: 10,
+    exportDataAsarray: true,
+};
 
-console.log(pagination.getNumberOfPages(20.9)) // => [ 1, 2, 3 ]
+const pagination_helper = pagination(params);
+
+
+// Calculates the total number of pages based on data count
+// @param data_count Total number of items to paginate
+// @returns Number of pages or array of page numbers if exportDataAsarray is true
+pagination_helper.getNumberOfPages(20.9) // => [1, 2, 3]
 ```
 
 #### Get Page Number by Offset And Limit
 ```javascript
-console.log(pagination.getPageNumberByOffsetAndLimit(30, 5)) // => 7, it means you are in page 7
+// Determines the current page number based on offset and limit values
+// @param offset Number of items to skip
+// @param limit Number of items per page
+// @returns The current page number
+pagination_helper.getPageNumberByOffsetAndLimit(30, 5)
 ```
 
 #### Get Offset(Limit) And Limit(Take) by Page Number
 this method give you the number of your (take, skip) by page number, it's useful for when you want to write a query to get the data
 ```javascript
-console.log(pagination.getTakeAndSkip(7)) // => { take: 10, skip: 60 }, it means, if you want to go to page 7 set this data
+// Calculates the take (limit) and skip (offset) values for pagination
+// @param pageNumber The current page number to calculate pagination values for
+// @returns An object containing take and skip values
+pagination_helper.getTakeAndSkip(7) // => { take: 10, skip: 60 }, it means, if you want to go to page 7 set this data
 // to your query
 ```
 
